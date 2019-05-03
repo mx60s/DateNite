@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block information %}
+
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p style="text-align:center;">
+	{% for weather in days_forecast %}
+	<b>high<b> {{weather[0]}}<br>
+	
+	<b>low<b> {{weather[1]}}<br>
+
+	<b>Current Weather<b> {{weather[2]}}<br>
+
+	<b>Current Weather<b> {{Weather[3]}}<br>
+
+	{% endfor %}
+	 <button onclick="goBack()">Go Back</button>
+
+	<script>
+	function goBack() {
+  	window.history.back();
+	}
+	</script> 
+	</p>
+</body>
+</html>
+{% endblock information %}

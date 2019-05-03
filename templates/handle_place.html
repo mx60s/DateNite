@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block information %}
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<p style="text-align:center;">
+	{%for i in store %}
+	<input type="radio" name="options" id="option1" value={{ i['name'] }}>&nbsp;&nbsp;<b>Restaurant Name: </b>{{ i['name'] }} <br>
+	{% endfor %}
+	<form action = "/weatherLookUp">
+	<p style="text-align:center;">
+	 <input type=submit value=Next>
+	</p>
+	</form>
+	</p>
+</body>
+{% endblock information %}
