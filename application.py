@@ -16,6 +16,7 @@ application = Flask(__name__)
 application.config['SECRET_KEY'] = '57ieiqw91628bb0b13ce0c676dfde280ba245'
 option = None
 chosenMovie = None
+chosenRestaurant = None
 Movie = namedtuple('Movie', 'Title Popularity Plot')
 zipcode = None
 
@@ -39,7 +40,17 @@ def movie_lookup(movieID):
     form = MyForm()
     conn = http.client.HTTPSConnection("api.themoviedb.org")
     movieResults = []
+    
+    ia = IMDb()
+    
+    movies = ia.search_movie('spiderman')
+    for item in movies:
+        ia.update(item)
 
+    conn = http.client.HTTPSConnection("api.themoviedb.org")
+
+    print(item.get('title'), item.get('rating'), item.get('plot'))
+    
     payload = "{}"
 
     conn.request("GET", "/3/movie/now_playing?page=1&language=en-US&api_key=4f8eb69d2b4817d88b7ca064921660c2", payload)
@@ -99,10 +110,7 @@ def get_forecast():
     days_forecast = get_weather(zipcode)
     print("ZIPCODE IS ", zipcode)
     print("SIZE OF DAYS", len(days_forecast))
-    if request.method == 'POST':
-       return render_template('handle_weather.html', days_forecast = days_forecast)
-    else:
-        return render_template("step3.html")
+    return render_template('handle_weather.html', days_forecast = days_forecast)
 
 @application.route('/result', methods = ['POST','GET'])
 def end_reccomendation():
@@ -145,4 +153,4 @@ def get_weather(zipcode):
     return five_day
 
 if __name__ == "__main__":
-    application.run(debug=True)
+application.run(debug=True)
