@@ -12,8 +12,8 @@ import http.client
 import json
 import requests
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '57ieiqw91628bb0b13ce0c676dfde280ba245'
+application = Flask(__name__)
+application.config['SECRET_KEY'] = '57ieiqw91628bb0b13ce0c676dfde280ba245'
 option = None
 chosenMovie = None
 Movie = namedtuple('Movie', 'Title Popularity Plot')
@@ -24,7 +24,7 @@ class MyForm(FlaskForm):
     submit = SubmitField('Search')
 
 
-@app.route("/", methods = ['POST','GET'])
+@application.route("/", methods = ['POST','GET'])
 def main():
     form = MyForm()
     if request.method == 'POST':
@@ -34,7 +34,7 @@ def main():
     else:
         return render_template('index.html',form = form)
 
-@app.route('/movie/<movieID>', methods = ['POST','GET'])
+@application.route('/movie/<movieID>', methods = ['POST','GET'])
 def movie_lookup(movieID):
     form = MyForm()
     conn = http.client.HTTPSConnection("api.themoviedb.org")
@@ -67,7 +67,7 @@ def movie_lookup(movieID):
     else:
         return render_template("step1.html",form = form, movieResults = movieResults)
 
-@app.route('/yelpSearch', methods = ['POST','GET'])
+@application.route('/yelpSearch', methods = ['POST','GET'])
 def yelp_search():
     form = MyForm()
 
@@ -90,7 +90,7 @@ def yelp_search():
     else:
         return render_template("step2.html")
 
-@app.route('/weatherLookUp', methods = ['POST','GET'])
+@application.route('/weatherLookUp', methods = ['POST','GET'])
 def get_forecast():
     form = MyForm()
  
@@ -104,7 +104,7 @@ def get_forecast():
     else:
         return render_template("step3.html")
 
-@app.route('/result', methods = ['POST','GET'])
+@application.route('/result', methods = ['POST','GET'])
 def end_reccomendation():
     form = MyForm()
     if request.method == 'POST':
@@ -145,4 +145,4 @@ def get_weather(zipcode):
     return five_day
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run(debug=True)
